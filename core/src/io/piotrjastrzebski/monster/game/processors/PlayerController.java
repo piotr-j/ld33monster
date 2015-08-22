@@ -57,18 +57,22 @@ public class PlayerController extends EntityProcessingSystem implements InputPro
 
 	@Override public boolean keyDown (int keycode) {
 		switch (keycode) {
+		case Input.Keys.UP:
 		case Input.Keys.W: {
 			moveY += 1;
 			break;
 		}
+		case Input.Keys.DOWN:
 		case Input.Keys.S: {
 			moveY += -1;
 			break;
 		}
+		case Input.Keys.LEFT:
 		case Input.Keys.A: {
 			moveX += -1;
 			break;
 		}
+		case Input.Keys.RIGHT:
 		case Input.Keys.D: {
 			moveX += 1;
 			break;
@@ -79,18 +83,22 @@ public class PlayerController extends EntityProcessingSystem implements InputPro
 
 	@Override public boolean keyUp (int keycode) {
 		switch (keycode) {
+		case Input.Keys.UP:
 		case Input.Keys.W: {
 			moveY -= 1;
 			break;
 		}
+		case Input.Keys.DOWN:
 		case Input.Keys.S: {
 			moveY -= -1;
 			break;
 		}
+		case Input.Keys.LEFT:
 		case Input.Keys.A: {
 			moveX -= -1;
 			break;
 		}
+		case Input.Keys.RIGHT:
 		case Input.Keys.D: {
 			moveX -= 1;
 			break;
