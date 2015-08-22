@@ -17,4 +17,9 @@ public class Bounds extends PooledComponent {
 		bounds.set(x, y, width, height);
 		return this;
 	}
+
+	public Bounds set (float width, float height) {
+		bounds.setSize(width, height);
+		return this;
+	}
 }

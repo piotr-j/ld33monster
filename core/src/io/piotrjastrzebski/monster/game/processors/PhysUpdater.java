@@ -13,17 +13,24 @@ import io.piotrjastrzebski.monster.game.components.*;
  * Created by PiotrJ on 22/08/15.
  */
 @Wire
-public class BoundsUpdater extends EntityProcessingSystem {
+public class PhysUpdater extends EntityProcessingSystem {
 	protected ComponentMapper<Position> mPosition;
 	protected ComponentMapper<Bounds> mBounds;
+	protected ComponentMapper<Phys> mPhys;
+	protected ComponentMapper<Movement> mMovement;
 
-	public BoundsUpdater () {
-		super(Aspect.all(Position.class, Rotation.class, Bounds.class));
+	public PhysUpdater () {
+		super(Aspect.all(Position.class, Bounds.class, Phys.class, Movement.class));
 	}
 
 	@Override protected void process (Entity e) {
-		Vector2 position = mPosition.get(e).pos;
-		Rectangle bounds = mBounds.get(e).bounds;
-		bounds.setPosition(position);
+		Phys phys = mPhys.get(e);
+		Vector2 pos = phys.body.getPosition();
+		Position position = mPosition.get(e);
+		position.pos.set(pos);
+		Bounds bounds = mBounds.get(e);
+		bounds.bounds.setPosition(pos);
+		Movement movement = mMovement.get(e);
+		movement.vel.set(phys.body.getLinearVelocity());
 	}
 }
