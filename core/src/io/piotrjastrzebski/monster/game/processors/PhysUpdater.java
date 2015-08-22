@@ -27,9 +27,9 @@ public class PhysUpdater extends EntityProcessingSystem {
 		Phys phys = mPhys.get(e);
 		Vector2 pos = phys.body.getPosition();
 		Position position = mPosition.get(e);
-		position.pos.set(pos);
 		Bounds bounds = mBounds.get(e);
-		bounds.bounds.setPosition(pos);
+		position.pos.set(pos.x - bounds.bounds.width / 2, pos.y - bounds.bounds.height / 2);
+		bounds.bounds.setPosition(position.pos);
 		Movement movement = mMovement.get(e);
 		movement.vel.set(phys.body.getLinearVelocity());
 	}

@@ -39,7 +39,7 @@ public class Game extends Base {
 		config.register(locator.assets);
 		config.register(multiplexer);
 
-
+		config.setSystem(new AssetInit());
 		config.setSystem(new Physics());
 		config.setManager(new PhysicsContacts());
 		config.setSystem(new PhysMaker());
@@ -47,6 +47,7 @@ public class Game extends Base {
 		config.setSystem(new Mover());
 		config.setSystem(new PhysUpdater());
 		config.setSystem(new PlayerFollower());
+		config.setSystem(new FacingRotator());
 		config.setSystem(new MapLoader());
 		config.setSystem(new MapParser());
 		config.setSystem(new MapRenderer());
@@ -60,12 +61,14 @@ public class Game extends Base {
 		mapEE.create(MapDef.class).path = "map/testmap.tmx";
 
 		EntityEdit edit = world.createEntity().edit();
-		edit.create(Bounds.class).set(0, 0, 1, 1);
+		edit.create(Bounds.class).set(0, 0, 16 * INV_SCALE, 16 * INV_SCALE);
 		edit.create(Rotation.class).set(0);
 		edit.create(Position.class).set(5, 5);
 		edit.create(Movement.class);
 		edit.create(Player.class).setMoveAcc(2f, 2f);
 		edit.create(Tint.class).set(1, 0, 0);
+		edit.create(Facing.class);
+		edit.create(RenderableDef.class).path("monster_baby.png");
 		edit.create(PhysDef.class)
 			.set(0.2f, 0.3f, 1f)
 			.type(BodyDef.BodyType.DynamicBody)

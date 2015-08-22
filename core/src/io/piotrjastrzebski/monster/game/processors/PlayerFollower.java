@@ -33,6 +33,8 @@ public class PlayerFollower extends EntityProcessingSystem {
 		Vector2 pos = mPosition.get(e).pos;
 		Rectangle bounds = mBounds.get(e).bounds;
 		camera.position.set(pos.x + bounds.width / 2, pos.y + bounds.height /2, 0);
+		// this way the player always has same size on screen even when it gets bigger
+		camera.zoom = bounds.width;
 		camera.update();
 	}
 }

@@ -2,6 +2,7 @@ package io.piotrjastrzebski.monster.utils;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * Created by PiotrJ on 22/08/15.
@@ -30,5 +31,10 @@ public class Assets {
 
 	public void dispose () {
 		manager.dispose();
+	}
+
+	public TextureRegion getRegion (String path) {
+		// TODO atlas
+		return new TextureRegion(manager.get(path, Texture.class));
 	}
 }

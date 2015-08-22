@@ -1,6 +1,7 @@
 package io.piotrjastrzebski.monster.game.components;
 
 import com.artemis.PooledComponent;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import io.piotrjastrzebski.monster.game.components.utils.Transient;
 
 /**
@@ -8,6 +9,7 @@ import io.piotrjastrzebski.monster.game.components.utils.Transient;
  */
 public class Renderable extends PooledComponent implements Transient {
 	// region? sprite?
+	public TextureRegion region;
 	@Override protected void reset () {
 
 	}
