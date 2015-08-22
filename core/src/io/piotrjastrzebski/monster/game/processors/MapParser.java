@@ -56,7 +56,25 @@ public class MapParser extends EntitySystem {
 	}
 
 	private void createFromTile (TiledMapTile tile, int x, int y) {
+		// TODO masks
+		// building
 		if (tile.getId() == 6) {
+			EntityEdit edit = world.createEntity().edit();
+			edit.create(Bounds.class).set(1, 1);
+			edit.create(Rotation.class);
+			edit.create(Position.class).pos.set(x, y);
+			edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody);
+		}
+		// water
+		if (tile.getId() == 1) {
+			EntityEdit edit = world.createEntity().edit();
+			edit.create(Bounds.class).set(1, 1);
+			edit.create(Rotation.class);
+			edit.create(Position.class).pos.set(x, y);
+			edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody);
+		}
+		// bounds
+		if (x == 0 || y == 0 || x == 99 || y == 99) {
 			EntityEdit edit = world.createEntity().edit();
 			edit.create(Bounds.class).set(1, 1);
 			edit.create(Rotation.class);
