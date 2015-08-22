@@ -48,7 +48,7 @@ public class Game extends Base {
 		config.setSystem(new PlayerController());
 		config.setSystem(new Mover());
 		config.setSystem(new PhysUpdater());
-		config.setSystem(new PlayerFollower());
+		config.setSystem(new CameraFollower());
 		config.setSystem(new FacingRotator());
 		config.setSystem(new MoveAnimator());
 		config.setSystem(new MapLoader());
@@ -71,8 +71,10 @@ public class Game extends Base {
 		edit.create(Player.class).setAccel(0.25f);
 		edit.create(Tint.class).set(1, 0, 0);
 		edit.create(Facing.class);
-		edit.create(AnimDef.class).path("monster/monster_baby_walk").frame(0.25f).count(2).looping(true).mode(Animation.PlayMode.LOOP);
+		edit.create(AnimDef.class).path("monster/monster_baby_walk").frame(0.25f).count(2).looping(true).mode(
+			Animation.PlayMode.LOOP);
 		edit.create(RenderableDef.class).path("monster/monster_baby_walk");
+		edit.create(Follow.class);
 		edit.create(PhysDef.class)
 			.set(0.2f, 0.3f, 1f)
 			.type(BodyDef.BodyType.DynamicBody)
