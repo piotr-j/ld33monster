@@ -1,7 +1,5 @@
 package io.piotrjastrzebski.monster.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import io.piotrjastrzebski.monster.utils.Assets;
 import io.piotrjastrzebski.monster.utils.Locator;
 
@@ -19,8 +17,6 @@ public class Loading extends Base {
 	float timer;
 	@Override public void render (float delta) {
 		super.render(delta);
-		Gdx.gl.glClearColor(0, 1, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		timer += delta;
 		if (assets.update() && timer > SPLASH_TIME) {
 			locator.game.setScreen(new MainMenu(locator));

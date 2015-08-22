@@ -5,7 +5,6 @@ import com.artemis.World;
 import com.artemis.WorldConfiguration;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.GL20;
 import io.piotrjastrzebski.monster.game.components.*;
 import io.piotrjastrzebski.monster.game.processors.*;
 import io.piotrjastrzebski.monster.utils.Locator;
@@ -56,8 +55,6 @@ public class Game extends Base {
 
 	@Override public void render (float delta) {
 		super.render(delta);
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		world.delta = delta;
 		world.process();
 	}
