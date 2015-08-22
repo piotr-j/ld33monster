@@ -13,6 +13,9 @@ import io.piotrjastrzebski.monster.game.processors.*;
 import io.piotrjastrzebski.monster.game.processors.physics.PhysMaker;
 import io.piotrjastrzebski.monster.game.processors.physics.Physics;
 import io.piotrjastrzebski.monster.game.processors.physics.PhysicsContacts;
+import io.piotrjastrzebski.monster.game.processors.player.PlayerAttacker;
+import io.piotrjastrzebski.monster.game.processors.player.PlayerController;
+import io.piotrjastrzebski.monster.game.processors.player.PlayerDasher;
 import io.piotrjastrzebski.monster.utils.Locator;
 
 /**
@@ -46,7 +49,10 @@ public class Game extends Base {
 		config.setManager(new PhysicsContacts());
 		config.setSystem(new PhysMaker());
 		config.setSystem(new PlayerController());
+		config.setSystem(new PlayerAttacker());
+		config.setSystem(new PlayerDasher());
 		config.setSystem(new Mover());
+		config.setSystem(new StatusUpdater());
 		config.setSystem(new PhysUpdater());
 		config.setSystem(new CameraFollower());
 		config.setSystem(new FacingRotator());
@@ -68,6 +74,8 @@ public class Game extends Base {
 		edit.create(Rotation.class).set(0);
 		edit.create(Position.class).set(32, 32);
 		edit.create(Movement.class);
+		edit.create(Attack.class).dmg(1f).delay(1f).dst(0.5f);
+		edit.create(Dash.class).dst(16f).delay(1f);
 		edit.create(Player.class).setAccel(0.25f);
 		edit.create(Tint.class).set(1, 0, 0);
 		edit.create(Facing.class);
@@ -75,14 +83,12 @@ public class Game extends Base {
 			Animation.PlayMode.LOOP);
 		edit.create(RenderableDef.class).path("monster/monster_baby_walk");
 		edit.create(Follow.class);
+		edit.create(Status.class).health(10);
 		edit.create(PhysDef.class)
 			.set(0.2f, 0.3f, 1f)
 			.type(BodyDef.BodyType.DynamicBody)
-			.linearDamping(8f);
-
-		for (int i = 0; i < 50; i++) {
-			createCollider();
-		}
+			.linearDamping(8f)
+			.userData(new Physics.UserData(edit.getEntity()));
 
 		for (int i = 0; i < 50; i++) {
 			createRat();
@@ -101,19 +107,12 @@ public class Game extends Base {
 		edit.create(Facing.class);
 		edit.create(AnimDef.class).path("prey/prey_rat_walk").frame(0.25f).count(2).looping(true).mode(Animation.PlayMode.LOOP);
 		edit.create(RenderableDef.class).path("prey/prey_rat_walk");
+		edit.create(Status.class).health(2);
 		edit.create(PhysDef.class)
 			.set(0.2f, 0.3f, 1f)
 			.type(BodyDef.BodyType.DynamicBody)
-			.linearDamping(8f);
-	}
-
-	private void createCollider () {
-		EntityEdit edit = world.createEntity().edit();
-		edit.create(Bounds.class).set(MathUtils.random(0.5f, 3), MathUtils.random(0.5f, 3));
-		edit.create(Rotation.class);
-		edit.create(Position.class).pos.set(MathUtils.random(-18, 18), MathUtils.random(-10, 10));
-		edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody);
-		edit.create(Tint.class).set(0, 1, 0);
+			.linearDamping(8f)
+			.userData(new Physics.UserData(edit.getEntity()));
 	}
 
 	@Override public void render (float delta) {

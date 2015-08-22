@@ -19,6 +19,7 @@ public class PhysMaker extends EntitySystem {
 	protected ComponentMapper<Position> mPosition;
 	protected ComponentMapper<Rotation> mRotation;
 	protected ComponentMapper<PhysDef> mPhysDef;
+	protected ComponentMapper<Phys> mPhys;
 
 	@Wire Physics physics;
 
@@ -45,6 +46,7 @@ public class PhysMaker extends EntitySystem {
 		bodyDef.linearDamping = physDef.linearDamping;
 
 		phys.body = physics.getWorld().createBody(bodyDef);
+		phys.body.setUserData(physDef.userData);
 
 		if (shape == null) shape = new PolygonShape();
 		shape.setAsBox(bounds.bounds.width / 2, bounds.bounds.height / 2);
@@ -59,6 +61,11 @@ public class PhysMaker extends EntitySystem {
 
 	@Override protected void processSystem () {
 		// do nothing
+	}
+
+	@Override protected void removed (int entityId) {
+		Phys phys = mPhys.get(entityId);
+		physics.getWorld().destroyBody(phys.body);
 	}
 
 	@Override protected void dispose () {

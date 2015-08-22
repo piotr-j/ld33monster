@@ -34,14 +34,22 @@ public class FacingRotator extends EntityProcessingSystem {
 		if (Math.abs(vel.x) > Math.abs(vel.y)) {
 			if (vel.x > 0) {
 				rotation.rotation = 270;
+				rotation.dirX = 1;
+				rotation.dirY = 0;
 			} else {
 				rotation.rotation = 90;
+				rotation.dirX = -1;
+				rotation.dirY = 0;
 			}
 		} else {
 			if (vel.y > 0) {
 				rotation.rotation = 0;
+				rotation.dirX = 0;
+				rotation.dirY = 1;
 			} else {
 				rotation.rotation = 180;
+				rotation.dirX = 0;
+				rotation.dirY = -1;
 			}
 		}
 	}

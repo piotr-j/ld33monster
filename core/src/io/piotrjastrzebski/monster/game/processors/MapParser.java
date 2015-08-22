@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import io.piotrjastrzebski.monster.game.components.*;
+import io.piotrjastrzebski.monster.game.processors.physics.Physics;
 
 /**
  * Created by PiotrJ on 22/08/15.
@@ -63,7 +64,8 @@ public class MapParser extends EntitySystem {
 			edit.create(Bounds.class).set(1, 1);
 			edit.create(Rotation.class);
 			edit.create(Position.class).pos.set(x, y);
-			edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody);
+			edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody)
+				.userData(new Physics.UserData(edit.getEntity()));
 		}
 		// water
 		if (tile.getId() == 1) {
@@ -71,7 +73,8 @@ public class MapParser extends EntitySystem {
 			edit.create(Bounds.class).set(1, 1);
 			edit.create(Rotation.class);
 			edit.create(Position.class).pos.set(x, y);
-			edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody);
+			edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody)
+				.userData(new Physics.UserData(edit.getEntity()));
 		}
 		// bounds
 		if (x == 0 || y == 0 || x == 99 || y == 99) {
@@ -79,7 +82,8 @@ public class MapParser extends EntitySystem {
 			edit.create(Bounds.class).set(1, 1);
 			edit.create(Rotation.class);
 			edit.create(Position.class).pos.set(x, y);
-			edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody);
+			edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody)
+				.userData(new Physics.UserData(edit.getEntity()));
 		}
 	}
 

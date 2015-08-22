@@ -8,6 +8,9 @@ import com.badlogic.gdx.math.Vector2;
  */
 public class Rotation extends PooledComponent {
 	public float rotation;
+	public int dirX;
+	public int dirY;
+
 	@Override protected void reset () {
 		rotation = 0;
 	}
