@@ -63,9 +63,9 @@ public class Game extends Base {
 		EntityEdit edit = world.createEntity().edit();
 		edit.create(Bounds.class).set(0, 0, 16 * INV_SCALE, 16 * INV_SCALE);
 		edit.create(Rotation.class).set(0);
-		edit.create(Position.class).set(5, 5);
+		edit.create(Position.class).set(32, 32);
 		edit.create(Movement.class);
-		edit.create(Player.class).setMoveAcc(2f, 2f);
+		edit.create(Player.class).setAccel(0.25f);
 		edit.create(Tint.class).set(1, 0, 0);
 		edit.create(Facing.class);
 		edit.create(RenderableDef.class).path("monster_baby.png");

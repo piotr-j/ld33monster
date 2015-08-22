@@ -8,14 +8,13 @@ import com.badlogic.gdx.math.Vector2;
  * Created by PiotrJ on 22/08/15.
  */
 public class Player extends PooledComponent {
-	public Vector2 moveAcc = new Vector2();
+	public float accel;
 	public int score;
 	@Override protected void reset () {
-		moveAcc.setZero();
+		accel = 0;
 	}
 
-	public Player setMoveAcc (float x, float y) {
-		moveAcc.set(x, y);
-		return this;
+	public void setAccel (float accel) {
+		this.accel = accel;
 	}
 }

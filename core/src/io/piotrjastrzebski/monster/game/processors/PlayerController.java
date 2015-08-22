@@ -39,20 +39,21 @@ public class PlayerController extends EntityProcessingSystem implements InputPro
 		Movement movement = mMovement.get(e);
 		Vector2 acc = movement.acc;
 		if (moveY > 0.01f) {
-			acc.y = player.moveAcc.y;
+			acc.y = player.accel;
 		} else if (moveY < -0.01f) {
-			acc.y = -player.moveAcc.y;
+			acc.y = -player.accel;
 		} else {
 			acc.y = 0;
 		}
 
 		if (moveX > 0.01f) {
-			acc.x = player.moveAcc.x;
+			acc.x = player.accel;
 		} else if (moveX < -0.01f) {
-			acc.x = -player.moveAcc.x;
+			acc.x = -player.accel;
 		} else {
 			acc.x = 0;
 		}
+		acc.limit(player.accel);
 		acc.scl(speed);
 	}
 
