@@ -46,11 +46,18 @@ public class Game extends Base {
 		config.setSystem(new PlayerController());
 		config.setSystem(new Mover());
 		config.setSystem(new PhysUpdater());
+		config.setSystem(new PlayerFollower());
+		config.setSystem(new MapLoader());
+		config.setSystem(new MapParser());
+		config.setSystem(new MapRenderer());
 		config.setSystem(new Renderer());
 //		config.setSystem(new DebugRenderer());
 		config.setSystem(new Box2dRenderer());
 
 		world = new World(config);
+
+		EntityEdit mapEE = world.createEntity().edit();
+		mapEE.create(MapDef.class).path = "map/testmap.tmx";
 
 		EntityEdit edit = world.createEntity().edit();
 		edit.create(Bounds.class).set(0, 0, 1, 1);
