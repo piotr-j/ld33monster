@@ -5,6 +5,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.EntityEdit;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Wire;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import io.piotrjastrzebski.monster.game.components.Renderable;
 import io.piotrjastrzebski.monster.game.components.RenderableDef;
 import io.piotrjastrzebski.monster.utils.Assets;
@@ -26,7 +27,7 @@ public class AssetInit extends EntitySystem {
 		RenderableDef def = mRenderableDef.get(entityId);
 		EntityEdit edit = world.getEntity(entityId).edit();
 		Renderable renderable = edit.create(Renderable.class);
-		renderable.region = assets.getRegion(def.path);
+		renderable.sprite = new TextureAtlas.AtlasSprite(assets.getRegion(def.path));
 	}
 
 	@Override protected void processSystem () {

@@ -5,6 +5,7 @@ import com.artemis.World;
 import com.artemis.WorldConfiguration;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import io.piotrjastrzebski.monster.game.components.*;
@@ -40,6 +41,7 @@ public class Game extends Base {
 		config.register(multiplexer);
 
 		config.setSystem(new AssetInit());
+		config.setSystem(new AnimInit());
 		config.setSystem(new Physics());
 		config.setManager(new PhysicsContacts());
 		config.setSystem(new PhysMaker());
@@ -48,6 +50,7 @@ public class Game extends Base {
 		config.setSystem(new PhysUpdater());
 		config.setSystem(new PlayerFollower());
 		config.setSystem(new FacingRotator());
+		config.setSystem(new MoveAnimator());
 		config.setSystem(new MapLoader());
 		config.setSystem(new MapParser());
 		config.setSystem(new MapRenderer());
@@ -68,7 +71,8 @@ public class Game extends Base {
 		edit.create(Player.class).setAccel(0.25f);
 		edit.create(Tint.class).set(1, 0, 0);
 		edit.create(Facing.class);
-		edit.create(RenderableDef.class).path("monster_baby.png");
+		edit.create(AnimDef.class).path("monster/monster_baby_walk").frame(0.25f).count(2).looping(true).mode(Animation.PlayMode.LOOP);
+		edit.create(RenderableDef.class).path("monster/monster_baby_walk");
 		edit.create(PhysDef.class)
 			.set(0.2f, 0.3f, 1f)
 			.type(BodyDef.BodyType.DynamicBody)
@@ -78,7 +82,27 @@ public class Game extends Base {
 			createCollider();
 		}
 
+		for (int i = 0; i < 50; i++) {
+			createRat();
+		}
+
 		Gdx.input.setInputProcessor(multiplexer);
+	}
+
+	private void createRat () {
+		EntityEdit edit = world.createEntity().edit();
+		edit.create(Bounds.class).set(0, 0, 16 * INV_SCALE, 16 * INV_SCALE);
+		edit.create(Rotation.class).set(0);
+		edit.create(Position.class).pos.set(MathUtils.random(0, 100), MathUtils.random(0, 100));
+		edit.create(Movement.class);
+		edit.create(Tint.class).set(1, 0, 0);
+		edit.create(Facing.class);
+		edit.create(AnimDef.class).path("prey/prey_rat_walk").frame(0.25f).count(2).looping(true).mode(Animation.PlayMode.LOOP);
+		edit.create(RenderableDef.class).path("prey/prey_rat_walk");
+		edit.create(PhysDef.class)
+			.set(0.2f, 0.3f, 1f)
+			.type(BodyDef.BodyType.DynamicBody)
+			.linearDamping(8f);
 	}
 
 	private void createCollider () {

@@ -7,7 +7,10 @@ import com.artemis.annotations.Wire;
 import com.artemis.systems.EntityProcessingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import io.piotrjastrzebski.monster.game.components.*;
 import io.piotrjastrzebski.monster.screens.Game;
 
@@ -35,16 +38,20 @@ public class Renderer extends EntityProcessingSystem {
 
 	@Override protected void process (Entity e) {
 		// TODO cull
-		Position position = mPosition.get(e);
-		Rotation rotation = mRotation.get(e);
-		Bounds bounds = mBounds.get(e);
+		Vector2 position = mPosition.get(e).pos;
+		float rotation = mRotation.get(e).rotation;
+		Rectangle bounds = mBounds.get(e).bounds;
 		Renderable renderable = mRenderable.get(e);
-		batch.draw(
-			renderable.region,
-			position.pos.x, position.pos.y,
-			bounds.bounds.width / 2, bounds.bounds.height / 2,
-			bounds.bounds.width, bounds.bounds.height, 1, 1, rotation.rotation
-		);
+		TextureAtlas.AtlasSprite sprite = renderable.sprite;
+		sprite.setOrigin(bounds.width / 2 , bounds.height / 2);
+		sprite.setBounds(position.x, position.y, bounds.width, bounds.height);
+		sprite.setRotation(rotation);
+		sprite.draw(batch);
+//		batch.draw(region,
+//			position.pos.x, position.pos.y,
+//			bounds.bounds.width / 2, bounds.bounds.height / 2,
+//			bounds.bounds.width, bounds.bounds.height, 1, 1, rotation.rotation
+//		);
 	}
 
 	@Override protected void end () {
