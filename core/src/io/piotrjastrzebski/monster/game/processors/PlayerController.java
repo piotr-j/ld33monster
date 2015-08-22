@@ -53,8 +53,10 @@ public class PlayerController extends EntityProcessingSystem implements InputPro
 		} else {
 			acc.x = 0;
 		}
+		acc.scl(speed);
 	}
 
+	float speed = 1;
 	@Override public boolean keyDown (int keycode) {
 		switch (keycode) {
 		case Input.Keys.UP:
@@ -75,6 +77,11 @@ public class PlayerController extends EntityProcessingSystem implements InputPro
 		case Input.Keys.RIGHT:
 		case Input.Keys.D: {
 			moveX += 1;
+			break;
+		}
+		case Input.Keys.SHIFT_LEFT:
+		case Input.Keys.SHIFT_RIGHT: {
+			speed = 5;
 			break;
 		}
 		}
@@ -101,6 +108,11 @@ public class PlayerController extends EntityProcessingSystem implements InputPro
 		case Input.Keys.RIGHT:
 		case Input.Keys.D: {
 			moveX -= 1;
+			break;
+		}
+		case Input.Keys.SHIFT_LEFT:
+		case Input.Keys.SHIFT_RIGHT: {
+			speed = 1;
 			break;
 		}
 		}
