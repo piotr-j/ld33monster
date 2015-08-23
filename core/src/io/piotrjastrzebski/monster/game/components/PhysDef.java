@@ -14,6 +14,7 @@ public class PhysDef extends PooledComponent {
 	public float friction;
 	public float density;
 	public float linearDamping;
+	public boolean circle;
 	public Vector2 velocity = new Vector2();
 	public Physics.UserData userData;
 
@@ -25,6 +26,7 @@ public class PhysDef extends PooledComponent {
 		type = BodyDef.BodyType.StaticBody;
 		userData = null;
 		velocity.setZero();
+		circle = false;
 	}
 
 	public PhysDef set (float restitution, float friction, float density) {
@@ -51,6 +53,11 @@ public class PhysDef extends PooledComponent {
 
 	public PhysDef velocity (float vx, float vy) {
 		velocity.set(vx, vy);
+		return this;
+	}
+
+	public PhysDef circle () {
+		circle = true;
 		return this;
 	}
 }

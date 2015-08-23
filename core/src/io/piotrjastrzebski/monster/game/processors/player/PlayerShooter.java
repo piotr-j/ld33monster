@@ -68,7 +68,7 @@ public class PlayerShooter extends EntityProcessingSystem {
 			start.y += bounds.height;
 		}
 
-		createProjectile(start.x, start.y, dirX, dirY, shoot.dmg, e.id);
+		createProjectile(start.x, start.y, dirX * 3, dirY * 3, shoot.dmg, e.id);
 	}
 
 	private void createProjectile (float x, float y, float vx, float vy, final float dmg, final int id) {
@@ -80,6 +80,7 @@ public class PlayerShooter extends EntityProcessingSystem {
 		edit.create(Facing.class);
 		edit.create(DeleteAfter.class).after(2f);
 		edit.create(PhysDef.class)
+			.circle()
 			.set(0.2f, 0.3f, 0f)
 			.type(BodyDef.BodyType.DynamicBody)
 			.linearDamping(0f)

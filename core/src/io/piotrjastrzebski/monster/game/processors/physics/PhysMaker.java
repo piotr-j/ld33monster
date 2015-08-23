@@ -5,9 +5,7 @@ import com.artemis.ComponentMapper;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 import io.piotrjastrzebski.monster.game.components.*;
 
 /**
@@ -29,7 +27,8 @@ public class PhysMaker extends EntitySystem {
 	}
 
 	BodyDef bodyDef;
-	PolygonShape shape;
+	PolygonShape rectShape;
+	CircleShape circleShape;
 	FixtureDef fixtureDef;
 	@Override protected void inserted (int eid) {
 		Position position = mPosition.get(eid);
@@ -49,8 +48,17 @@ public class PhysMaker extends EntitySystem {
 		phys.body.setUserData(physDef.userData);
 		phys.body.setLinearVelocity(physDef.velocity);
 
-		if (shape == null) shape = new PolygonShape();
-		shape.setAsBox(bounds.bounds.width / 2, bounds.bounds.height / 2);
+		Shape shape;
+		if (physDef.circle) {
+			if (circleShape == null) circleShape = new CircleShape();
+			circleShape.setRadius(bounds.bounds.width/2);
+			shape = circleShape;
+		} else {
+			if (rectShape == null) rectShape = new PolygonShape();
+
+			rectShape.setAsBox(bounds.bounds.width / 2, bounds.bounds.height / 2);
+			shape = rectShape;
+		}
 
 		if (fixtureDef == null) fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
@@ -70,6 +78,7 @@ public class PhysMaker extends EntitySystem {
 	}
 
 	@Override protected void dispose () {
-		if (shape != null) shape.dispose();
+		if (rectShape != null) rectShape.dispose();
+		if (circleShape != null) circleShape.dispose();
 	}
 }
