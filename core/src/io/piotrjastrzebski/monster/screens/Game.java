@@ -64,6 +64,7 @@ public class Game extends Base {
 		config.setSystem(new MapParser());
 		config.setSystem(new MapRenderer());
 		config.setSystem(new Renderer());
+		config.setSystem(new Steering());
 //		config.setSystem(new DebugRenderer());
 		config.setSystem(new Box2dRenderer());
 

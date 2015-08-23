@@ -6,6 +6,7 @@ import com.artemis.EntityEdit;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.steer.behaviors.Wander;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import io.piotrjastrzebski.monster.game.components.*;
 import io.piotrjastrzebski.monster.game.processors.physics.Physics;
@@ -105,7 +107,27 @@ public class MapParser extends EntitySystem {
 		edit.create(AnimDef.class).path("prey/prey_rat_walk").frame(0.25f).count(2).looping(true).mode(Animation.PlayMode.LOOP);
 		edit.create(RenderableDef.class).path("prey/prey_rat_walk");
 		edit.create(Status.class).health(2);
+
+		PhysSteerable physSteerable = edit.create(PhysSteerable.class);
+		physSteerable.setMaxLinearAcceleration(4);
+		physSteerable.setMaxLinearSpeed(1);
+		physSteerable.setMaxAngularAcceleration(0.5f); // greater than 0 because independent facing is enabled
+		physSteerable.setMaxAngularSpeed(5);
+		physSteerable.setIndependentFacing(true);
+		physSteerable.setBoundingRadius(0.25f);
+
+		physSteerable.behaviour = new Wander<>(physSteerable) //
+			.setFaceEnabled(true) // We want to use Face internally (independent facing is on)
+			.setAlignTolerance(0.001f) // Used by Face
+			.setDecelerationRadius(0.25f) // Used by Face
+			.setTimeToTarget(0.1f) // Used by Face
+			.setWanderOffset(6f) //
+			.setWanderOrientation(MathUtils.random(360)) //
+			.setWanderRadius(2f) //
+			.setWanderRate(MathUtils.PI2 * 40);
+
 		edit.create(PhysDef.class)
+			.circle()
 			.set(0.2f, 0.3f, 1f)
 			.type(BodyDef.BodyType.DynamicBody)
 			.linearDamping(8f)
