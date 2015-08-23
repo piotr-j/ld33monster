@@ -47,6 +47,7 @@ public class PhysMaker extends EntitySystem {
 
 		phys.body = physics.getWorld().createBody(bodyDef);
 		phys.body.setUserData(physDef.userData);
+		phys.body.setLinearVelocity(physDef.velocity);
 
 		if (shape == null) shape = new PolygonShape();
 		shape.setAsBox(bounds.bounds.width / 2, bounds.bounds.height / 2);

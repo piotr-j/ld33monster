@@ -1,6 +1,7 @@
 package io.piotrjastrzebski.monster.game.components;
 
 import com.artemis.PooledComponent;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import io.piotrjastrzebski.monster.game.processors.physics.Physics;
 
@@ -13,6 +14,7 @@ public class PhysDef extends PooledComponent {
 	public float friction;
 	public float density;
 	public float linearDamping;
+	public Vector2 velocity = new Vector2();
 	public Physics.UserData userData;
 
 	@Override protected void reset () {
@@ -22,6 +24,7 @@ public class PhysDef extends PooledComponent {
 		linearDamping = 0;
 		type = BodyDef.BodyType.StaticBody;
 		userData = null;
+		velocity.setZero();
 	}
 
 	public PhysDef set (float restitution, float friction, float density) {
@@ -43,6 +46,11 @@ public class PhysDef extends PooledComponent {
 
 	public PhysDef userData (Physics.UserData userData) {
 		this.userData = userData;
+		return this;
+	}
+
+	public PhysDef velocity (float vx, float vy) {
+		velocity.set(vx, vy);
 		return this;
 	}
 }

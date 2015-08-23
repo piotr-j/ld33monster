@@ -9,10 +9,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import io.piotrjastrzebski.monster.game.components.Movement;
-import io.piotrjastrzebski.monster.game.components.Player;
-import io.piotrjastrzebski.monster.game.components.PlayerAttack;
-import io.piotrjastrzebski.monster.game.components.PlayerDash;
+import io.piotrjastrzebski.monster.game.components.*;
 
 /**
  * Created by PiotrJ on 22/08/15.
@@ -38,6 +35,7 @@ public class PlayerController extends EntityProcessingSystem implements InputPro
 	float moveY;
 	boolean attack;
 	boolean dash;
+	boolean shoot;
 	@Override protected void process (Entity e) {
 		Player player = mPlayer.get(e);
 		Movement movement = mMovement.get(e);
@@ -64,6 +62,9 @@ public class PlayerController extends EntityProcessingSystem implements InputPro
 		}
 		if (dash) {
 			e.edit().create(PlayerDash.class);
+		}
+		if (shoot) {
+			e.edit().create(PlayerShoot.class);
 		}
  	}
 
@@ -93,6 +94,11 @@ public class PlayerController extends EntityProcessingSystem implements InputPro
 		case Input.Keys.CONTROL_LEFT:
 		case Input.Keys.CONTROL_RIGHT: {
 			dash = true;
+			break;
+		}
+		case Input.Keys.Q:
+		case Input.Keys.E: {
+			shoot = true;
 			break;
 		}
 		case Input.Keys.SPACE: {
@@ -133,6 +139,11 @@ public class PlayerController extends EntityProcessingSystem implements InputPro
 		case Input.Keys.CONTROL_LEFT:
 		case Input.Keys.CONTROL_RIGHT: {
 			dash = false;
+			break;
+		}
+		case Input.Keys.Q:
+		case Input.Keys.E: {
+			shoot = false;
 			break;
 		}
 		case Input.Keys.SPACE: {

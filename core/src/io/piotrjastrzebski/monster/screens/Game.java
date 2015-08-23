@@ -16,6 +16,7 @@ import io.piotrjastrzebski.monster.game.processors.physics.PhysicsContacts;
 import io.piotrjastrzebski.monster.game.processors.player.PlayerAttacker;
 import io.piotrjastrzebski.monster.game.processors.player.PlayerController;
 import io.piotrjastrzebski.monster.game.processors.player.PlayerDasher;
+import io.piotrjastrzebski.monster.game.processors.player.PlayerShooter;
 import io.piotrjastrzebski.monster.utils.Locator;
 
 /**
@@ -45,11 +46,13 @@ public class Game extends Base {
 
 		config.setSystem(new AssetInit());
 		config.setSystem(new AnimInit());
+		config.setSystem(new Deleter());
 		config.setSystem(new Physics());
 		config.setManager(new PhysicsContacts());
 		config.setSystem(new PhysMaker());
 		config.setSystem(new PlayerController());
 		config.setSystem(new PlayerAttacker());
+		config.setSystem(new PlayerShooter());
 		config.setSystem(new PlayerDasher());
 		config.setSystem(new Mover());
 		config.setSystem(new StatusUpdater());
@@ -75,6 +78,7 @@ public class Game extends Base {
 		edit.create(Position.class).set(32, 32);
 		edit.create(Movement.class);
 		edit.create(Attack.class).dmg(1f).delay(1f).dst(0.5f);
+		edit.create(Shoot.class).dmg(0.2f).delay(0.25f).dst(10f);
 		edit.create(Dash.class).dst(16f).delay(1f);
 		edit.create(Player.class).setAccel(0.25f);
 		edit.create(Tint.class).set(1, 0, 0);
