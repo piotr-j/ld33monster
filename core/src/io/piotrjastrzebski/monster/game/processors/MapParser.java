@@ -6,6 +6,7 @@ import com.artemis.EntityEdit;
 import com.artemis.EntitySystem;
 import com.artemis.annotations.Wire;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import io.piotrjastrzebski.monster.game.components.*;
 import io.piotrjastrzebski.monster.game.processors.physics.Physics;
+import io.piotrjastrzebski.monster.screens.Game;
 
 /**
  * Created by PiotrJ on 22/08/15.
@@ -66,7 +68,7 @@ public class MapParser extends EntitySystem {
 			edit.create(Position.class).pos.set(x, y);
 			edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody)
 				.userData(new Physics.UserData(edit.getEntity()));
-		}
+		} else
 		// water
 		if (tile.getId() == 1) {
 			EntityEdit edit = world.createEntity().edit();
@@ -75,7 +77,7 @@ public class MapParser extends EntitySystem {
 			edit.create(Position.class).pos.set(x, y);
 			edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody)
 				.userData(new Physics.UserData(edit.getEntity()));
-		}
+		} else
 		// bounds
 		if (x == 0 || y == 0 || x == 99 || y == 99) {
 			EntityEdit edit = world.createEntity().edit();
@@ -84,7 +86,30 @@ public class MapParser extends EntitySystem {
 			edit.create(Position.class).pos.set(x, y);
 			edit.create(PhysDef.class).set(0.2f, 0.3f, 1f).type(BodyDef.BodyType.StaticBody)
 				.userData(new Physics.UserData(edit.getEntity()));
+		} else {
+			// 5% for a rat on available tile
+			if (MathUtils.random() < 0.05f) {
+				createRat(x, y);
+			}
 		}
+	}
+
+	private void createRat (int x, int y) {
+		EntityEdit edit = world.createEntity().edit();
+		edit.create(Bounds.class).set(0, 0, 16 * Game.INV_SCALE, 16 * Game.INV_SCALE);
+		edit.create(Rotation.class).set(0);
+		edit.create(Position.class).pos.set(x + MathUtils.random(0, 0.5f), y + MathUtils.random(0, 0.5f));
+		edit.create(Movement.class);
+		edit.create(Tint.class).set(1, 0, 0);
+		edit.create(Facing.class);
+		edit.create(AnimDef.class).path("prey/prey_rat_walk").frame(0.25f).count(2).looping(true).mode(Animation.PlayMode.LOOP);
+		edit.create(RenderableDef.class).path("prey/prey_rat_walk");
+		edit.create(Status.class).health(2);
+		edit.create(PhysDef.class)
+			.set(0.2f, 0.3f, 1f)
+			.type(BodyDef.BodyType.DynamicBody)
+			.linearDamping(8f)
+			.userData(new Physics.UserData(edit.getEntity()));
 	}
 
 	@Override protected void processSystem () {

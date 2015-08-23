@@ -90,29 +90,7 @@ public class Game extends Base {
 			.linearDamping(8f)
 			.userData(new Physics.UserData(edit.getEntity()));
 
-		for (int i = 0; i < 50; i++) {
-			createRat();
-		}
-
 		Gdx.input.setInputProcessor(multiplexer);
-	}
-
-	private void createRat () {
-		EntityEdit edit = world.createEntity().edit();
-		edit.create(Bounds.class).set(0, 0, 16 * INV_SCALE, 16 * INV_SCALE);
-		edit.create(Rotation.class).set(0);
-		edit.create(Position.class).pos.set(MathUtils.random(0, 100), MathUtils.random(0, 100));
-		edit.create(Movement.class);
-		edit.create(Tint.class).set(1, 0, 0);
-		edit.create(Facing.class);
-		edit.create(AnimDef.class).path("prey/prey_rat_walk").frame(0.25f).count(2).looping(true).mode(Animation.PlayMode.LOOP);
-		edit.create(RenderableDef.class).path("prey/prey_rat_walk");
-		edit.create(Status.class).health(2);
-		edit.create(PhysDef.class)
-			.set(0.2f, 0.3f, 1f)
-			.type(BodyDef.BodyType.DynamicBody)
-			.linearDamping(8f)
-			.userData(new Physics.UserData(edit.getEntity()));
 	}
 
 	@Override public void render (float delta) {
