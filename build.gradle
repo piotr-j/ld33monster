@@ -28,7 +28,7 @@ allprojects {
         artemisVersion = '0.11.4' // edit version artemis-odb-gradle-plugin, see buildscript.dependencies.classpath above.
 //        artemisContribVersion = "0.10.2"
         box2DLightsVersion = '1.4'
-        //aiVersion = '1.5.0'
+        aiVersion = '1.5.0'
     }
 
     repositories {
@@ -76,7 +76,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
 //        compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
 //        compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
-//        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
 //        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 //        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
 //        natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
@@ -108,7 +108,7 @@ project(":html") {
 //        compile "com.badlogicgames.gdx:gdx-controllers-gwt:$gdxVersion"
 //        compile "com.badlogicgames.gdx:gdx-controllers-gwt:$gdxVersion:sources"
 
-//        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion:sources"
+        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion:sources"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion:sources"
 
         // artemis-odb
@@ -145,7 +145,7 @@ project(":core") {
 //        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 //        compile "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
 //        compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
-//        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
 
         // Artemis-odb
         compile "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
