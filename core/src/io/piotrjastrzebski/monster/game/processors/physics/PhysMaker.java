@@ -64,6 +64,7 @@ public class PhysMaker extends EntitySystem {
 		fixtureDef.shape = shape;
 		fixtureDef.restitution = physDef.restitution;
 		fixtureDef.friction = physDef.friction;
+		fixtureDef.density = physDef.density;
 
 		phys.body.createFixture(fixtureDef);
 	}
